@@ -1,10 +1,22 @@
-import { UserButton } from "@clerk/nextjs";
+"use client";
+
+import { useStoreModel } from "@/hooks/use-store-model";
+import { useEffect } from "react";
+
 
 export default function SetupPage() {
- return (
-   <div>
-    <UserButton afterSignOutUrl="/" />
-     This is a protected page. You must be signed in to access it.
-   </div>
- )
+
+  const onOpen = useStoreModel(state => state.onOpen);
+  const isOpen = useStoreModel(state => state.isOpen);
+
+  useEffect(() => {
+    if (!isOpen) {
+      onOpen();
+    }
+  }, [isOpen, onOpen]);
+  return (
+    <div>
+      Root Page
+    </div>
+  )
 }
