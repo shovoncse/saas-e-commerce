@@ -1,4 +1,4 @@
-# OAMK DIN22SP Advanced Web Applications Project
+#  Saas E-Commerce with Admin Panel and CMS
 
 ## Project Overview
 
