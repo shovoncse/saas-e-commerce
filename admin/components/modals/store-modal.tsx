@@ -6,7 +6,7 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useStoreModel } from "@/hooks/use-store-model";
+import { useStoreModal } from "@/hooks/use-store-modal";
 import { Modal } from "@/components/ui/modal";
 import {
   Form,
@@ -25,7 +25,7 @@ const formSchema = z.object({
 });
 
 export const StoreModal = () => {
-  const { isOpen, onClose } = useStoreModel();
+  const { isOpen, onClose } = useStoreModal();
   const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
