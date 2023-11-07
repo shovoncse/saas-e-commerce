@@ -14,13 +14,14 @@ import {
 import Heading from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import { useOrigin } from "@/hooks/use-origin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Store } from "@prisma/client";
 
 import axios from "axios";
 import { Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { use, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
@@ -40,6 +41,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({
 }) => {
   const params = useParams();
   const router = useRouter();
+  const origin = useOrigin();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -128,10 +130,10 @@ const SettingsForm: React.FC<SettingsFormProps> = ({
         </form>
       </Form>
       <Separator />
-      <ApiAlert 
-      variant="public" 
-      title="NEXT_PUBLIC_API_URL" 
-      description={`${origin}/api/${params.storeId}`} />
+      <ApiAlert
+        variant="public"
+        title="NEXT_PUBLIC_API_URL"
+        description={`${origin}/api/${params.storeId}`} />
     </>
   );
 }
