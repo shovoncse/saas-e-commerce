@@ -103,19 +103,19 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 405 });
     }
 
-    const billboard = await prismadb.billboard.update({
+    const category = await prismadb.category.update({
       where: {
-        id: params.billboardId,
+        id: params.categoryId,
       },
       data: {
-        label,
-        imageUrl
+        name,
+        billboardId,
       }
     });
   
-    return NextResponse.json(billboard);
+    return NextResponse.json(category);
   } catch (error) {
-    console.log('[BILLBOARD_PATCH]', error);
+    console.log('[CATEGORY_PATCH]', error);
     return new NextResponse("Internal error", { status: 500 });
   }
 };
