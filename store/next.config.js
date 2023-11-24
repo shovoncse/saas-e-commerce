@@ -2,7 +2,8 @@
 const nextConfig = {
   images: {
     domains: [
-      "res.cloudinary.com",
+      "tailwindui.com",
+      "res.cloudinary.com"
     ]
   }
 }
