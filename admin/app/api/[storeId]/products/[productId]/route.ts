@@ -23,7 +23,7 @@ export async function GET(
         color: true,
       }
     });
-
+  
     return NextResponse.json(product);
   } catch (error) {
     console.log('[PRODUCT_GET]', error);
@@ -62,7 +62,7 @@ export async function DELETE(
         id: params.productId
       },
     });
-
+  
     return NextResponse.json(product);
   } catch (error) {
     console.log('[PRODUCT_DELETE]', error);
@@ -157,7 +157,7 @@ export async function PATCH(
         },
       },
     })
-
+  
     return NextResponse.json(product);
   } catch (error) {
     console.log('[PRODUCT_PATCH]', error);

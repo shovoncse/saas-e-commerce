@@ -1,60 +1,61 @@
+"use client";
+
+import axios from "axios";
+import { useState } from "react";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { AlertModal } from "@/components/modals/alert-modal";
 
 import { ColorColumn } from "./columns";
-import { useState } from "react";
-import axios from "axios";
-import { AlertModal } from "@/components/modals/alert-modal";
 
 interface CellActionProps {
   data: ColorColumn;
 }
 
-export const CellAction: React.FC<CellActionProps> = ({ data }) => {
+export const CellAction: React.FC<CellActionProps> = ({
+  data,
+}) => {
   const router = useRouter();
   const params = useParams();
-  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id);
-    toast.success("Color ID copied to clipboard.");
-  };
-
-  const onDelete = async () => {
+  const onConfirm = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/colors/${data.id}`
-      );
+      await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
+      toast.success('Color deleted.');
       router.refresh();
-      router.push(`/${params.storeId}/colors`);
-      toast.success("Color deleted!");
     } catch (error) {
-      toast.error("Make sure you removed all products using this color first!");
+      toast.error('Make sure you removed all products using this color first.');
     } finally {
-      setLoading(false);
       setOpen(false);
+      setLoading(false);
     }
   };
 
+  const onCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
+    toast.success('Color ID copied to clipboard.');
+  }
+
   return (
     <>
-      <AlertModal
-        isOpen={open}
-        loading={loading}
+      <AlertModal 
+        isOpen={open} 
         onClose={() => setOpen(false)}
-        onConfirm={onDelete}
+        onConfirm={onConfirm}
+        loading={loading}
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -65,17 +66,19 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => onCopy(data.id)}>
+          <DropdownMenuItem
+            onClick={() => onCopy(data.id)}
+          >
             <Copy className="mr-2 h-4 w-4" /> Copy Id
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
-              router.push(`/${params.storeId}/colors/${data.id}`)
-            }
+            onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Update
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => setOpen(true)}>
+          <DropdownMenuItem
+            onClick={() => setOpen(true)}
+          >
             <Trash className="mr-2 h-4 w-4" /> Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

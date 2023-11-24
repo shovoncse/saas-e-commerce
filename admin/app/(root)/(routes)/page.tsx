@@ -1,22 +1,21 @@
 "use client";
 
-import { useStoreModal } from "@/hooks/use-store-modal";
 import { useEffect } from "react";
+import { useParams } from "next/navigation";
 
+import { useStoreModal } from "@/hooks/use-store-modal";
 
-export default function SetupPage() {
-
-  const onOpen = useStoreModal(state => state.onOpen);
-  const isOpen = useStoreModal(state => state.isOpen);
+const SetupPage = () => {
+  const onOpen = useStoreModal((state) => state.onOpen);
+  const isOpen = useStoreModal((state) => state.isOpen);
 
   useEffect(() => {
     if (!isOpen) {
       onOpen();
     }
   }, [isOpen, onOpen]);
-  return (
-    <div>
-      Root Page
-    </div>
-  )
-}
+
+  return null;
+};
+ 
+export default SetupPage;
